@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notetakingapp/Screens/HomeScreen.dart';
 import 'package:notetakingapp/Screens/LoginScreen.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginScreen(),
+      home: const HomePage(),
     );
   }
 }
