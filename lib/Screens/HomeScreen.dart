@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:notetakingapp/Screens/AddNoteScreen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -46,7 +47,10 @@ class _HomePageState extends State<HomePage> {
               color: Color(0xffff8d19),
               size: 45,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AddNoteScreen()));
+            },
           ),
         ),
       ),
