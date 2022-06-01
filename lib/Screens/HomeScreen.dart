@@ -9,23 +9,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int selectedPage = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.menu,
-              size: 30,
-            ),
-            label: ""),
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              size: 30,
-            ),
-            label: "")
-      ]),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: selectedPage,
+          onTap: (value) {
+            setState(() {
+              selectedPage = value;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.menu,
+                  size: 30,
+                ),
+                label: ""),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.search,
+                  size: 30,
+                ),
+                label: "")
+          ]),
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(80),
         child: Container(
