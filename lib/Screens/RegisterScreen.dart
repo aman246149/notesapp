@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:notetakingapp/Resources/Auth_methods.dart';
+import 'package:notetakingapp/Screens/HomeScreen.dart';
 import 'package:notetakingapp/Screens/LoginScreen.dart';
 import 'package:notetakingapp/Widgets/TextInputField.dart';
 import 'package:notetakingapp/Widgets/Text_Input_Field.dart';
@@ -79,17 +81,30 @@ class _SignUpState extends State<SignUp> {
               ),
               InkWell(
                 onTap: () async {
-                  // String response = await Auth_Methods()
-                  //     .login(emailController.text, passwordController.text);
-                  // if (response == "success") {
-                  //   Navigator.pushReplacement(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //         builder: (context) => const HomeScreen(),
-                  //       ));
-                  // } else {
-                  //   customSnackBar(response, context);
-                  // }
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  String res = await Auth_Methods().signUp(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    username: _usernameController.text,
+                  );
+                  if (res != "succes") {
+                    showSnackBar(res, context);
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  } else {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  }
+
+                  setState(() {
+                    _isLoading = false;
+                  });
                 },
                 child: Container(
                   padding: const EdgeInsets.only(top: 5, bottom: 5),

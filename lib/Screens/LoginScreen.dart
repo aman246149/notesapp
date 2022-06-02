@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notetakingapp/Resources/Auth_methods.dart';
+import 'package:notetakingapp/Screens/HomeScreen.dart';
 import 'package:notetakingapp/Screens/RegisterScreen.dart';
 import 'package:notetakingapp/Widgets/TextInputField.dart';
 import 'package:notetakingapp/utils/constant.dart';
@@ -13,6 +15,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
+
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -77,17 +81,25 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             InkWell(
               onTap: () async {
-                // String response = await Auth_Methods()
-                //     .login(emailController.text, passwordController.text);
-                // if (response == "success") {
-                //   Navigator.pushReplacement(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => const HomeScreen(),
-                //       ));
-                // } else {
-                //   customSnackBar(response, context);
-                // }
+                setState(() {
+                  isLoading = true;
+                });
+                String res = await Auth_Methods().loginUser(
+                    email: emailController.text,
+                    password: passwordController.text);
+
+                if (res == "success") {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                } else {
+                  showSnackBar(res, context);
+                }
+                setState(() {
+                  isLoading = false;
+                });
               },
               child: Container(
                 padding: const EdgeInsets.only(top: 5, bottom: 5),
