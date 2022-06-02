@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomFloatingActionButton extends StatelessWidget {
   final size;
   final context;
-  final StatefulBuilder customDialog;
+  final Dialog customDialog;
 
   const CustomFloatingActionButton(
       {Key? key, this.size, this.context, required this.customDialog})
