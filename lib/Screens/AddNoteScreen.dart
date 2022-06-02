@@ -1,6 +1,10 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:notetakingapp/Widgets/CustomColorBox.dart';
+import 'package:notetakingapp/Widgets/CustomFloatingActionButton.dart';
+import 'package:notetakingapp/utils/datetime.dart';
 
 class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({Key? key}) : super(key: key);
@@ -14,8 +18,11 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   bool selectedColor = false;
   String selectedColorCode = "";
 
+  var globalTime = {};
+  var globalDate = "";
+
   List<Map<String, dynamic>> colors = [
-    {"color": 0xffffa447, "isChecked": false},
+    {"color": 0xffffa447, "isChecked": true},
     {"color": 0xff7ecbff, "isChecked": false},
     {"color": 0xffffa6c4, "isChecked": false},
     {"color": 0xff1eccc3, "isChecked": false},
@@ -28,28 +35,127 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     super.dispose();
   }
 
+  customDialog(BuildContext context) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0)), //this right here
+          child: Container(
+            height: MediaQuery.of(context).size.height / 2.5,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0, right: 18),
+                  child: GestureDetector(
+                    onTap: (() async {
+                      String date = await selectDate(context);
+                      setState(() {
+                        globalDate = date;
+                      });
+                    }),
+                    child: Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Color(0xffedf1f3),
+                        borderRadius: new BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: globalDate.isEmpty
+                                  ? Text("Today")
+                                  : Text(
+                                      globalDate,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                            ),
+                            Icon(Icons.calendar_month)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      var time = await selectTime(context);
+                      print(time["hour"]);
+                      print(time["min"]);
+                      setState(
+                        () {
+                          globalTime = time;
+                        },
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Color(0xffedf1f3),
+                        borderRadius: new BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: globalTime.isEmpty
+                                  ? Text("After 5 Mins")
+                                  : Text(
+                                      "After ${globalTime["hour"]} hour ${globalTime["min"]} Mins"),
+                            ),
+                            Icon(Icons.punch_clock_rounded)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 48.0),
+                  child: Row(
+                    children: [
+                      Expanded(child: Container()),
+                      TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(color: Colors.black),
+                          )),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text("Save"),
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xffffa447)),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: size.height / 8),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(80),
-          child: Container(
-            color: Colors.white,
-            padding: EdgeInsets.all(8),
-            child: FloatingActionButton(
-              backgroundColor: Colors.white,
-              child: const Icon(
-                Icons.check,
-                color: Color(0xffff8d19),
-                size: 45,
-              ),
-              onPressed: () {},
-            ),
-          ),
-        ),
+      floatingActionButton: CustomFloatingActionButton(
+        context: context,
+        size: size,
+        customDialog: customDialog(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       resizeToAvoidBottomInset: false,
@@ -67,7 +173,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Icon(Icons.arrow_back),
+                    GestureDetector(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: const Icon(Icons.arrow_back)),
                     Row(
                       children: const [
                         Icon(Icons.pin),
@@ -199,27 +307,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomContainerColor extends StatelessWidget {
-  final int colorValue;
-  const CustomContainerColor({
-    Key? key,
-    required this.colorValue,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: 50,
-      decoration: BoxDecoration(
-        color: Color(colorValue),
-        borderRadius: new BorderRadius.circular(10.0),
-      ),
-      
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notetakingapp/Screens/AddNoteScreen.dart';
+import 'package:notetakingapp/Widgets/CustomCards.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedPage = 0;
+  List<int> pinned = [1];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,29 +107,37 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                "pinned",
-                style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 4.4,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return CustomCard();
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 23,
-              ),
+              pinned.length > 0
+                  ? Text(
+                      "pinned",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )
+                  : Container(),
+              pinned.length > 0
+                  ? SizedBox(
+                      height: 10,
+                    )
+                  : Container(),
+              pinned.length > 0
+                  ? Container(
+                      height: MediaQuery.of(context).size.height / 4.4,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return CustomCard();
+                        },
+                      ),
+                    )
+                  : Container(),
+              pinned.length > 0
+                  ? SizedBox(
+                      height: 23,
+                    )
+                  : Container(),
               const Text(
                 "Upcoming",
                 style: TextStyle(
@@ -159,56 +169,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomCard extends StatelessWidget {
-  const CustomCard({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 2.4,
-      child: Card(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-        ),
-        color: Color(0xff7ecbff),
-        child: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Coffee",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Text(
-                "Prepare hot coffee for friends",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              const SizedBox(
-                height: 9,
-              ),
-              Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueAccent)),
-                  child: const Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Today, 4:30"),
-                  ))
             ],
           ),
         ),
