@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:notetakingapp/Model/Note.dart';
-import 'package:notetakingapp/Provider/NotesProvider.dart';
+
 import 'package:notetakingapp/utils/constant.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +41,78 @@ class NotesMethods {
     } catch (e) {
       showSnackBar(e.toString(), context);
       return noteList;
+    }
+  }
+
+  Future<void> deleteNotes(
+      String docId, BuildContext context, bool isPinned) async {
+    print(docId);
+    try {
+      print(isPinned);
+      if (isPinned == false) {
+        await _firestore
+            .collection("pinNotes")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection("userIndPinNotes")
+            .doc(docId)
+            .delete();
+        print("delete");
+      } else {
+        await _firestore
+            .collection("Notes")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection("userIndNotes")
+            .doc(docId)
+            .delete();
+      }
+
+      showSnackBar("Notes Deleted Successfully", context);
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+  }
+
+  Future<void> pinnedNotes(String docId, BuildContext context) async {
+    try {
+      DocumentSnapshot snapshot = await _firestore
+          .collection("Notes")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("userIndNotes")
+          .doc(docId)
+          .get();
+      print(snapshot.data());
+
+      await _firestore
+          .collection("pinNotes")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("userIndPinNotes")
+          .add(snapshot.data() as Map<String, dynamic>);
+
+      // await deleteNotes(docId, context);
+    } catch (e) {}
+  }
+
+  Future<Map<String, dynamic>> getPinnedNote() async {
+    List<Note> dataList = [];
+    List<String> docIds = [];
+    try {
+      var data = await _firestore
+          .collection("pinNotes")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("userIndPinNotes")
+          .get();
+
+      for (int i = 0; i < data.docs.length; i++) {
+        Note note = Note.fromSnap(data.docs[i]);
+        dataList.add(note);
+        docIds.add(data.docs[i].id);
+      }
+
+      print(docIds);
+      print(dataList[0].uid);
+      return {"dataList": dataList, "docIdsList": docIds};
+    } catch (e) {
+      return {"error": e.toString()};
     }
   }
 }

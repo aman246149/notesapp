@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:notetakingapp/utils/constant.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
   final size;
   final context;
   final Dialog customDialog;
+  final String note;
 
   const CustomFloatingActionButton(
-      {Key? key, this.size, this.context, required this.customDialog})
+      {Key? key,
+      this.size,
+      this.context,
+      required this.customDialog,
+      required this.note})
       : super(key: key);
 
   @override
@@ -27,8 +33,13 @@ class CustomFloatingActionButton extends StatelessWidget {
                 size: 45,
               ),
               onPressed: () {
-                showDialog(
-                    context: context, builder: (context) => customDialog);
+                List<String> arr = note.split(" ");
+                if (arr.length < 5) {
+                  showSnackBar("Please Enter Atleast 5 Words", context);
+                } else {
+                  showDialog(
+                      context: context, builder: (context) => customDialog);
+                }
               },
             ),
           ),

@@ -19,14 +19,14 @@ class CustomCard extends StatelessWidget {
             Radius.circular(20),
           ),
         ),
-        color: Color(0xff7ecbff),
+        color: Color(note.colorHexNode),
         child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                note.note,
+                "${note.note.substring(0, 21)} ..",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               const SizedBox(
@@ -36,8 +36,8 @@ class CustomCard extends StatelessWidget {
                 height: 9,
               ),
               Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueAccent)),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(

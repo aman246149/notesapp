@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:notetakingapp/Provider/NotesProvider.dart';
+import 'package:notetakingapp/Provider/PinNoteProvider.dart';
+
 import 'package:notetakingapp/Provider/timeProvider.dart';
 import 'package:notetakingapp/Screens/HomeScreen.dart';
 import 'package:notetakingapp/Screens/LoginScreen.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           create: (context) => TimeProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => NotesProvider(),
+          create: (context) => PinnedNoteProvider(),
         )
       ],
       child: MaterialApp(

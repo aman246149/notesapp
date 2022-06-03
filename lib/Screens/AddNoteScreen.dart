@@ -40,6 +40,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: CustomFloatingActionButton(
+        note: _noteController.text,
         context: context,
         size: size,
         customDialog:
@@ -104,6 +105,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                         height: MediaQuery.of(context).size.height / 2,
                         width: MediaQuery.of(context).size.width,
                         child: TextField(
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
                           controller: _noteController,
                           autofocus: true,
                           decoration: InputDecoration(
@@ -113,6 +116,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: 5,
+
                           // cursorHeight: 50,
                         ),
                       ),
