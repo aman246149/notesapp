@@ -1,7 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:notetakingapp/Model/Note.dart';
+import 'package:notetakingapp/Provider/NotesProvider.dart';
+import 'package:notetakingapp/Resources/Notes_methods.dart';
 import 'package:notetakingapp/Screens/AddNoteScreen.dart';
 import 'package:notetakingapp/Widgets/CustomCards.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,7 +18,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedPage = 0;
-  List<int> pinned = [1];
+  List<int> pinned = [];
+ 
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 5,
                         itemBuilder: (context, index) {
-                          return CustomCard();
+                          return Text("");
                         },
                       ),
                     )
@@ -149,26 +162,51 @@ class _HomePageState extends State<HomePage> {
                 height: 10,
               ),
               Expanded(
-                child: GridView.custom(
-                  gridDelegate: SliverWovenGridDelegate.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 6,
-                    crossAxisSpacing: 6,
-                    pattern: [
-                      const WovenGridTile(1),
-                      const WovenGridTile(
-                        5 / 7,
-                        crossAxisRatio: 0.9,
-                        alignment: AlignmentDirectional.centerEnd,
-                      ),
-                    ],
-                  ),
-                  childrenDelegate: SliverChildBuilderDelegate(
-                    childCount: 10,
-                    (context, index) => CustomCard(),
-                  ),
-                ),
-              ),
+                  child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("Notes")
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .collection("userIndNotes")
+                    .snapshots(),
+                builder: (context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshots) {
+                  if (snapshots.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (!snapshots.hasData) {
+                    return Center(
+                      child: Text("Create Your First Notes"),
+                    );
+                  }
+
+                  return GridView.custom(
+                    gridDelegate: SliverWovenGridDelegate.count(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 6,
+                      crossAxisSpacing: 6,
+                      pattern: [
+                        const WovenGridTile(1),
+                        const WovenGridTile(
+                          5 / 7,
+                          crossAxisRatio: 0.9,
+                          alignment: AlignmentDirectional.centerEnd,
+                        ),
+                      ],
+                    ),
+                    childrenDelegate: SliverChildBuilderDelegate(
+                      childCount: snapshots.data!.docs.length,
+                      (context, index) {
+                        Note note = Note.fromSnap(snapshots.data!.docs[index]);
+                        return CustomCard(note: note);
+                      },
+                    ),
+                  );
+                },
+              )),
             ],
           ),
         ),

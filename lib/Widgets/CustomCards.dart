@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:notetakingapp/Model/Note.dart';
 
 class CustomCard extends StatelessWidget {
+  final Note note;
+
   const CustomCard({
     Key? key,
+    required this.note,
   }) : super(key: key);
 
   @override
@@ -22,15 +26,11 @@ class CustomCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Coffee",
+                note.note,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               const SizedBox(
                 height: 8,
-              ),
-              Text(
-                "Prepare hot coffee for friends",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               const SizedBox(
                 height: 9,
@@ -38,9 +38,10 @@ class CustomCard extends StatelessWidget {
               Container(
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.blueAccent)),
-                  child: const Padding(
+                  child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Today, 4:30"),
+                    child: Text(
+                        "${note.date}, ${note.time['hour']}:${note.time['min']}"),
                   ))
             ],
           ),

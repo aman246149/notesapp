@@ -19,7 +19,7 @@ class AddNoteScreen extends StatefulWidget {
 class _AddNoteScreenState extends State<AddNoteScreen> {
   TextEditingController _noteController = TextEditingController();
   bool selectedColor = false;
-  String selectedColorCode = "";
+  int selectedColorCode = 0xffffa447;
 
   List<Map<String, dynamic>> colors = [
     {"color": 0xffffa447, "isChecked": true},
@@ -42,7 +42,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       floatingActionButton: CustomFloatingActionButton(
         context: context,
         size: size,
-        customDialog: customDialog(context),
+        customDialog:
+            customDialog(context, _noteController.text, selectedColorCode),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       resizeToAvoidBottomInset: false,
@@ -102,7 +103,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                       Container(
                         height: MediaQuery.of(context).size.height / 2,
                         width: MediaQuery.of(context).size.width,
-                        child: const TextField(
+                        child: TextField(
+                          controller: _noteController,
                           autofocus: true,
                           decoration: InputDecoration(
                               border: InputBorder.none,
@@ -166,8 +168,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                                                           value!;
                                                     }),
                                                     selectedColorCode =
-                                                        colors[index]["color"]
-                                                            .toString(),
+                                                        colors[index]["color"],
                                                     print(selectedColorCode
                                                         .toString())
                                                   },

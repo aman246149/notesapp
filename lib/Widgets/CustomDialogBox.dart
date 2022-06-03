@@ -1,11 +1,50 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:notetakingapp/Model/Note.dart';
 import 'package:notetakingapp/Provider/timeProvider.dart';
+import 'package:notetakingapp/Resources/Notes_methods.dart';
 import 'package:notetakingapp/Screens/HomeScreen.dart';
 import 'package:notetakingapp/utils/datetime.dart';
 import 'package:provider/provider.dart';
 
-customDialog(BuildContext context) {
+customDialog(BuildContext context, String notes, int colorHexNode) {
   final timeDateProvider = Provider.of<TimeProvider>(context);
+
+  void saveNotesToFirebase() {
+    String whenDateIsEmpty = "";
+    Map<String, dynamic> whenTimeisEmpty = {};
+    if (timeDateProvider.date.isEmpty && //when we dont select date and time
+        timeDateProvider.time.isEmpty) {
+      whenDateIsEmpty = whenDateIsEMpty();
+      timeDateProvider.setDate(whenDateIsEmpty);
+      whenTimeisEmpty = whenTimeIsEmpty();
+      timeDateProvider.setTime(whenTimeisEmpty);
+    } else if (timeDateProvider
+            .date.isEmpty && //when we only select time not date
+        timeDateProvider.time.isNotEmpty) {
+      whenDateIsEmpty = whenDateIsEMpty();
+      timeDateProvider.setDate(whenDateIsEmpty);
+    } else if (timeDateProvider
+            .date.isNotEmpty && // when we only selct date not time
+        timeDateProvider.time.isEmpty) {
+      whenTimeisEmpty = whenTimeIsEmpty();
+      timeDateProvider.setTime(whenTimeisEmpty);
+    }
+
+    Note note = Note(
+        note: notes,
+        colorHexNode: colorHexNode,
+        date: timeDateProvider.date,
+        time: timeDateProvider.time,
+        uid: FirebaseAuth.instance.currentUser!.uid);
+
+    NotesMethods().saveNotesToFirebase(note, context);
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
+  }
 
   return Dialog(
     shape: RoundedRectangleBorder(
@@ -103,21 +142,7 @@ customDialog(BuildContext context) {
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    if (timeDateProvider.date.isEmpty) {
-                      print(DateTime.now());
-                    }
-                    if (timeDateProvider.time.isEmpty) {
-                      print("after 5 min");
-                    } else {
-                      print(timeDateProvider.date);
-                      print(timeDateProvider.time["hour"]);
-                      print(timeDateProvider.time["min"]);
-                    }
-
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
-                  },
+                  onPressed: saveNotesToFirebase,
                   child: Text("Save"),
                   style: ElevatedButton.styleFrom(primary: Color(0xffffa447)),
                 )

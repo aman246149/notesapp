@@ -5,8 +5,8 @@ Future<Map<String, dynamic>> selectTime(BuildContext context) async {
   TimeOfDay initialTime = TimeOfDay.now();
   TimeOfDay? pickedTime =
       await showTimePicker(context: context, initialTime: initialTime);
-
-  return {"hour": pickedTime!.hour, "min": pickedTime.minute};
+  pickedTime ??= initialTime;
+  return {"hour": pickedTime.hour, "min": pickedTime.minute};
 }
 
 Future<String> selectDate(BuildContext context) async {
@@ -24,5 +24,23 @@ Future<String> selectDate(BuildContext context) async {
 
     return datString;
   }
-  return "";
+
+  var format = DateFormat("MMMM d");
+  String rdatString = format.format(selectedDate).toString();
+
+  return rdatString;
+}
+
+String whenDateIsEMpty() {
+  DateTime selectedDate = DateTime.now();
+  var format = DateFormat("MMMM d");
+  String rdatString = format.format(selectedDate).toString();
+
+  return rdatString;
+}
+
+Map<String, dynamic> whenTimeIsEmpty() {
+  TimeOfDay initialTime = TimeOfDay.now();
+  TimeOfDay? pickedTime = initialTime;
+    return {"hour": pickedTime.hour, "min": pickedTime.minute};
 }
