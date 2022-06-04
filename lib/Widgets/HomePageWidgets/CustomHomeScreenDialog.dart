@@ -11,7 +11,6 @@ openDialogBox(
   bool isPinned,
 ) {
   final size = MediaQuery.of(context).size;
-  final pinNotesList = Provider.of<PinnedNoteProvider>(context);
 
   return Dialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
