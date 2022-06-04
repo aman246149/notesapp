@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notetakingapp/Model/Note.dart';
 import 'package:notetakingapp/Widgets/CustomCards.dart';
-import 'package:notetakingapp/Widgets/CustomHomeScreenDialog.dart';
+import 'package:notetakingapp/Widgets/HomePageWidgets/CustomHomeScreenDialog.dart';
 
 class CustomStream extends StatelessWidget {
   final Stream url;

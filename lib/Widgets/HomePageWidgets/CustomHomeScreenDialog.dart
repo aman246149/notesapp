@@ -44,9 +44,14 @@ openDialogBox(
             SizedBox(
               height: 12,
             ),
-            Text(
-              note.note,
-              style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+            Container(
+              height: MediaQuery.of(context).size.height / 4,
+              child: SingleChildScrollView(
+                child: Text(
+                  note.note,
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                ),
+              ),
             ),
             Flexible(
               child: Container(),
