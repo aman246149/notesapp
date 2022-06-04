@@ -4,8 +4,14 @@ import 'package:notetakingapp/Provider/PinNoteProvider.dart';
 import 'package:notetakingapp/Resources/Notes_methods.dart';
 import 'package:provider/provider.dart';
 
-openDialogBox(BuildContext context, Note note, String docId, bool isPinned) {
+openDialogBox(
+  BuildContext context,
+  Note note,
+  String docId,
+  bool isPinned,
+) {
   final size = MediaQuery.of(context).size;
+  final pinNotesList = Provider.of<PinnedNoteProvider>(context);
 
   return Dialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -70,6 +76,11 @@ openDialogBox(BuildContext context, Note note, String docId, bool isPinned) {
                             Provider.of<PinnedNoteProvider>(context,
                                     listen: false)
                                 .setPinNote(pinList);
+
+                            Provider.of<PinnedNoteProvider>(context,
+                                    listen: false)
+                                .setDocumentIdsList(mapData["docIdsList"]);
+
                             Navigator.pop(context);
                           } catch (e) {
                             print(e);
@@ -91,8 +102,11 @@ openDialogBox(BuildContext context, Note note, String docId, bool isPinned) {
                       ),
                       onPressed: () async {
                         try {
-                          Navigator.pop(context);
-                          await NotesMethods().deleteNotes(docId, context,isPinned);
+                          await NotesMethods()
+                              .deleteNotes(docId, context, isPinned);
+                          if (isPinned == false) {}
+
+                          Navigator.of(context).pop();
                         } catch (e) {}
                       },
                     ),

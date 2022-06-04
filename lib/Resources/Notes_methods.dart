@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:notetakingapp/Model/Note.dart';
+import 'package:notetakingapp/Provider/PinNoteProvider.dart';
 
 import 'package:notetakingapp/utils/constant.dart';
 import 'package:provider/provider.dart';

@@ -45,7 +45,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final pinNotesList = Provider.of<PinnedNoteProvider>(context).pinNote;
+    print("build");
+    final pinNotesList = Provider.of<PinnedNoteProvider>(context).docIdsList;
+    print(pinNotesList);
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedPage,
