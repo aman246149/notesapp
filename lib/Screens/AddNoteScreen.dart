@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:notetakingapp/Provider/timeProvider.dart';
-import 'package:notetakingapp/Widgets/CustomColorBox.dart';
-import 'package:notetakingapp/Widgets/CustomDialogBox.dart';
-import 'package:notetakingapp/Widgets/CustomFloatingActionButton.dart';
+import 'package:notetakingapp/Widgets/AddPageWidgets/CustomColorBox.dart';
+import 'package:notetakingapp/Widgets/AddPageWidgets/CustomDialogBox.dart';
+import 'package:notetakingapp/Widgets/AddPageWidgets/CustomFloatingActionButton.dart';
 import 'package:notetakingapp/utils/datetime.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:notetakingapp/Model/Note.dart';
 
 class CustomCard extends StatelessWidget {
@@ -27,7 +28,10 @@ class CustomCard extends StatelessWidget {
             children: [
               Text(
                 "${note.note.substring(0, 21)} ..",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: GoogleFonts.robotoSlab(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20,
+                ),
               ),
               const SizedBox(
                 height: 8,
@@ -36,12 +40,14 @@ class CustomCard extends StatelessWidget {
                 height: 9,
               ),
               Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                        "${note.date}, ${note.time['hour']}:${note.time['min']}"),
+                        "${note.date}, ${note.time['hour']}:${note.time['min']}",
+                        style: GoogleFonts.lato(fontWeight: FontWeight.w800)),
                   ))
             ],
           ),
