@@ -42,6 +42,9 @@ class _HomePageState extends State<HomePage> {
     print(pinNotesList);
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+          enableFeedback: true,
+          iconSize: 20,
+          backgroundColor: Color(0XFFecf7ff),
           currentIndex: selectedPage,
           onTap: (value) {
             setState(() {

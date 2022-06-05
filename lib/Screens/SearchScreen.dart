@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:notetakingapp/Model/Note.dart';
 import 'package:notetakingapp/Widgets/HomePageWidgets/CustomCards.dart';
 import 'package:notetakingapp/Widgets/HomePageWidgets/CustomHomeScreenDialog.dart';
@@ -28,6 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           title: TextFormField(
@@ -102,7 +104,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 },
               )
             : Center(
-                child: Text("Search For Your Note"),
+                child: Text(
+                  "Search For Your Note",
+                  style: GoogleFonts.robotoSlab(
+                      fontWeight: FontWeight.w900, fontSize: 20),
+                ),
               ));
   }
 }

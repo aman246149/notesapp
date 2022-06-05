@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notetakingapp/Resources/Auth_methods.dart';
-import 'package:notetakingapp/Screens/HomeScreen.dart';
+import 'package:notetakingapp/Screens/InitialScreen.dart';
 import 'package:notetakingapp/Screens/RegisterScreen.dart';
 import 'package:notetakingapp/Widgets/GlobalWidgets/TextInputField.dart';
 import 'package:notetakingapp/utils/constant.dart';

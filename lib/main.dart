@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:notetakingapp/Provider/PinNoteProvider.dart';
 
 import 'package:notetakingapp/Provider/timeProvider.dart';
-import 'package:notetakingapp/Screens/HomeScreen.dart';
+import 'package:notetakingapp/Screens/InitialScreen.dart';
 import 'package:notetakingapp/Screens/LoginScreen.dart';
 import 'package:provider/provider.dart';
 

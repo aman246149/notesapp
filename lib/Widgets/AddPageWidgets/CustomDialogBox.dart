@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:notetakingapp/Model/Note.dart';
 import 'package:notetakingapp/Provider/timeProvider.dart';
 import 'package:notetakingapp/Resources/Notes_methods.dart';
-import 'package:notetakingapp/Screens/HomeScreen.dart';
+import 'package:notetakingapp/Screens/InitialScreen.dart';
 import 'package:notetakingapp/utils/datetime.dart';
 import 'package:provider/provider.dart';
 
