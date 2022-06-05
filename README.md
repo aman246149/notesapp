@@ -6,7 +6,7 @@
 - Real Time search of Notes
 - Responsive Design 
 
-App Video Url
+App Video Url (open in laptop please)
 
 DropBox Link
 https://www.dropbox.com/s/e2ovzcpy6fqz9an/RPReplay_Final1654440306.mp4?dl=0
