@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedPage = 0;
+  int pageIndex = 0;
   bool isAnyPinnNotes = false;
 
   @override
@@ -34,58 +34,164 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  List<Widget> pages = [MainHomeScreen(), SearchScreen()];
+  List<Widget> pages = [MainHomeScreen(), MainHomeScreen(), SearchScreen()];
   @override
   Widget build(BuildContext context) {
     print("build");
     final pinNotesList = Provider.of<PinnedNoteProvider>(context).docIdsList;
     print(pinNotesList);
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          enableFeedback: true,
-          iconSize: 20,
-          backgroundColor: Color(0XFFecf7ff),
-          currentIndex: selectedPage,
-          onTap: (value) {
-            setState(() {
-              selectedPage = value;
-            });
-          },
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.menu,
-                  size: 30,
+      bottomNavigationBar: buildMyNavBar(context),
+      // floatingActionButton: ClipRRect(
+      //   borderRadius: BorderRadius.circular(80),
+      //   child: Container(
+      //     color: Colors.white,
+      //     padding: EdgeInsets.all(8),
+      //     child: FloatingActionButton(
+      //       backgroundColor: Colors.white,
+      //       child: const Icon(
+      //         Icons.add,
+      //         color: Color(0xffff8d19),
+      //         size: 45,
+      //       ),
+      //       onPressed: () {
+      //         Navigator.push(context,
+      //             MaterialPageRoute(builder: (context) => AddNoteScreen()));
+      //       },
+      //     ),
+      //   ),
+      // ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: pages[pageIndex],
+    );
+  }
+
+  Stack buildMyNavBar(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          top: 25,
+          bottom: 0,
+          child: Card(
+            elevation: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0xfff4f2f1),
+                // gradient: LinearGradient(
+                //     colors: [Color(0Xfffbefe4), Color(0Xfffbefe4)],
+                //     begin: Alignment.topLeft,
+                //     end: Alignment.bottomRight),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20),
                 ),
-                label: ""),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.search,
-                  size: 30,
-                ),
-                label: "")
-          ]),
-      floatingActionButton: ClipRRect(
-        borderRadius: BorderRadius.circular(80),
-        child: Container(
-          color: Colors.white,
-          padding: EdgeInsets.all(8),
-          child: FloatingActionButton(
-            backgroundColor: Colors.white,
-            child: const Icon(
-              Icons.add,
-              color: Color(0xffff8d19),
-              size: 45,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  IconButton(
+                    enableFeedback: false,
+                    onPressed: () {
+                      setState(() {
+                        pageIndex = 0;
+                      });
+                    },
+                    icon: pageIndex == 0
+                        ? const Icon(
+                            Icons.menu_rounded,
+                            color: Colors.black,
+                            size: 35,
+                          )
+                        : const Icon(
+                            Icons.menu_outlined,
+                            color: Colors.black,
+                            size: 35,
+                          ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 38.0, right: 38),
+                    child: Stack(
+                      children: [
+                        IconButton(
+                          enableFeedback: false,
+                          onPressed: () {
+                            setState(() {
+                              pageIndex = 1;
+                            });
+                          },
+                          icon: pageIndex == 1 ? Container() : Container(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    enableFeedback: false,
+                    onPressed: () {
+                      setState(() {
+                        pageIndex = 2;
+                      });
+                    },
+                    icon: pageIndex == 2
+                        ? const Icon(
+                            Icons.search_rounded,
+                            color: Colors.black,
+                            size: 35,
+                          )
+                        : const Icon(
+                            Icons.search_outlined,
+                            color: Colors.black,
+                            size: 35,
+                          ),
+                  ),
+                ],
+              ),
             ),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddNoteScreen()));
-            },
           ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: pages[selectedPage],
+        Padding(
+          padding:
+              EdgeInsets.only(left: MediaQuery.of(context).size.width / 2.59),
+          child: Container(
+            height: 100,
+            width: 100,
+            color: Colors.transparent,
+            child: Column(
+              children: [
+                Container(
+                  height: 80,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(100),
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(80),
+                    child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.all(8),
+                      child: FloatingActionButton(
+                        backgroundColor: Colors.white,
+                        child: const Icon(
+                          Icons.add,
+                          color: Color(0xffff8d19),
+                          size: 55,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddNoteScreen()));
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
