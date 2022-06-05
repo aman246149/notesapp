@@ -6,14 +6,14 @@ class Note {
   final String date;
   final Map time;
   final String uid;
+  final DateTime now = DateTime.now();
 
   Note(
       {required this.note,
       required this.colorHexNode,
       required this.date,
       required this.time,
-      required this.uid
-      });
+      required this.uid});
 
   //method convert class into object
 
@@ -23,7 +23,8 @@ class Note {
       "colorHexNode": colorHexNode,
       "date": date,
       "time": time,
-      "uid":uid
+      "uid": uid,
+      "dateTime": now
     };
   }
 
@@ -32,11 +33,10 @@ class Note {
     var snapshot = snap.data()! as Map<String, dynamic>;
 
     return Note(
-      note: snapshot['note'],
-      colorHexNode: snapshot["colorHexNode"],
-      date: snapshot["date"],
-      time: snapshot["time"],
-      uid: snapshot["uid"]
-    );
+        note: snapshot['note'],
+        colorHexNode: snapshot["colorHexNode"],
+        date: snapshot["date"],
+        time: snapshot["time"],
+        uid: snapshot["uid"]);
   }
 }

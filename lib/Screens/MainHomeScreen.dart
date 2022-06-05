@@ -87,6 +87,7 @@ class MainHomeScreen extends StatelessWidget {
                   .collection("Notes")
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection("userIndNotes")
+                  .orderBy("dateTime", descending: true)
                   .snapshots(),
             )),
           ],
