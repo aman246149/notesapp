@@ -2,7 +2,7 @@
 
 ## Features of App
 - Firebase Persisitant Login and Signup
-- Add, Delete,Pin and change colour of Notes
+- Add, Delete,Pin Notes and change colour of Notes
 - Real Time search of Notes
 - Responsive Design 
 
@@ -17,3 +17,4 @@ https://user-images.githubusercontent.com/53884276/172049559-61277765-4570-4c4d-
 
 Apk Link
 https://www.dropbox.com/s/c6dqwruacr2xope/app-release.apk?dl=0
+
